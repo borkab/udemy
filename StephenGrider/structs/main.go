@@ -14,19 +14,7 @@ type person struct {
 }
 
 func main() {
-	/*
-		var mila person
-		var lena person
 
-		lena.firstName = "Lena"
-		lena.lastName = "Mirena"
-
-		mia := person{"Mia", "Tenet"}
-		alex := person{firstName: "Alex", lastName: "Anderson"}
-		fmt.Println(mila, lena, mia, alex)
-
-		fmt.Printf("%+v", lena)
-	*/
 	jim := person{
 		firstName: "Jim",
 		lastName:  "Penaut",
@@ -36,5 +24,10 @@ func main() {
 		}, //u have to take a comma "," at the end of every single line
 	}
 
-	fmt.Printf("%+v", jim)
+	jim.print()
+
+}
+
+func (p person) print() {
+	fmt.Printf("%+v", p)
 }
