@@ -10,7 +10,7 @@ type contactInfo struct {
 type person struct {
 	firstName string
 	lastName  string
-	contact   contactInfo
+	contactInfo
 }
 
 func main() {
@@ -30,10 +30,10 @@ func main() {
 	jim := person{
 		firstName: "Jim",
 		lastName:  "Penaut",
-		contact: contactInfo{
+		contactInfo: contactInfo{
 			email:   "jim@gmail.com",
-			zipCode: 71544,
-		},
+			zipCode: 71544, //when u declare variables in a struct
+		}, //u have to take a comma "," at the end of every single line
 	}
 
 	fmt.Printf("%+v", jim)
