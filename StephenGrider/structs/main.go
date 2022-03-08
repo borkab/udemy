@@ -24,10 +24,16 @@ func main() {
 		}, //u have to take a comma "," at the end of every single line
 	}
 
+	jim.updateName("Jimmy")
 	jim.print()
 
 }
 
 func (p person) print() {
 	fmt.Printf("%+v", p)
+}
+
+func (p person) updateName(newFirstName string) {
+	p.firstName = newFirstName
+
 }
