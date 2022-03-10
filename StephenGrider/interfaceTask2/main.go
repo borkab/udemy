@@ -29,15 +29,19 @@ type file struct {
 }
 
 func main() {
-	fl := file{filename: os.Args[0]}
+	fl := file{filename: os.Args[1]}
 
+	open, err := os.Open(fl.filename)
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(1)
+	}
+	fmt.Println(open)
 	printFromFile(fl)
-}
 
-func (f file) readFromFile() {
-	return
+	//io.Copy(fl, open.Body)
 }
 
 func printFromFile(f file) {
-	fmt.Println(f.readFromFile())
+	fmt.Println(f.filename)
 }
