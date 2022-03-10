@@ -13,5 +13,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(resp)
+	bs := make([]byte, 99999) //99999 this is a number of the empty elements inside of our byte slice
+	//we need this number because Read() reads only when we still have places in the byte slice
+	resp.Body.Read(bs)
+	fmt.Println(string(bs))
 }
