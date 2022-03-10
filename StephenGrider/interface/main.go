@@ -29,6 +29,7 @@ func printGreeting(eb englishBot) {
 }
 */
 // u can't declare two functons with the same name
+// neither with different arguments in them
 /*
 func printGreeting(sb spanishBot) {
 	fmt.Println(sb.getGreeting())
