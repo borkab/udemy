@@ -37,11 +37,11 @@ func main() {
 		os.Exit(1)
 	}
 	fmt.Println(open)
-	printFromFile(fl)
+	printFileName(fl)
 
 	//io.Copy(fl, open.Body)
 }
 
-func printFromFile(f file) {
-	fmt.Println(f.filename)
+func printFileName(f file) string {
+	return (f.filename)
 }
