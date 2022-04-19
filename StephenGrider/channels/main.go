@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -22,7 +23,11 @@ func main() {
 	}
 	//this is the block of code which is handeling when ever a request gets completed in our program
 	for l := range c {
+		time.Sleep(5 * time.Second)
 		go checkLink(l, c)
+		/* we are saying that every single time that a value comes out from the channel c
+		pause for 5 seconds and then immediately start the next go routine to refetch this link
+		*/
 	}
 	//this is the equivalent as below, but it is clearly
 	/*
