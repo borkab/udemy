@@ -21,10 +21,15 @@ func main() {
 		go checkLink(link, c) //
 	}
 	//this is the block of code which is handeling when ever a request gets completed in our program
-	for { //it is an infinite loop, also never ends
-		go checkLink(<-c, c)
+	for l := range c {
+		go checkLink(l, c)
 	}
-
+	//this is the equivalent as below, but it is clearly
+	/*
+		for { //it is an infinite loop, also never ends
+			go checkLink(<-c, c)
+		}
+	*/
 }
 
 func checkLink(link string, c chan string) {
