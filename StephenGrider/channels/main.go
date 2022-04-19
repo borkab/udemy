@@ -23,18 +23,13 @@ func main() {
 	}
 	//this is the block of code which is handeling when ever a request gets completed in our program
 	for l := range c {
-		time.Sleep(5 * time.Second)
-		go checkLink(l, c)
-		/* we are saying that every single time that a value comes out from the channel c
-		pause for 5 seconds and then immediately start the next go routine to refetch this link
-		*/
+		go func(link string) {
+			time.Sleep(5 * time.Second)
+			checkLink(link, c)
+		}(l) //this is our function argument
+
 	}
-	//this is the equivalent as below, but it is clearly
-	/*
-		for { //it is an infinite loop, also never ends
-			go checkLink(<-c, c)
-		}
-	*/
+
 }
 
 func checkLink(link string, c chan string) {
