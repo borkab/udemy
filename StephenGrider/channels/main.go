@@ -12,36 +12,30 @@ func main() {
 		"http://stackowerflow.com",
 		"http://golang.org",
 		"http://amazon.com",
+		"http://github.com",
 	}
 
 	c := make(chan string)
 
 	for _, link := range links {
-		go checkLink(link, c)
+		go checkLink(link, c) //
 	}
-
-	for i := 0; i < len(links); i++ { //this prints the data from the channel
-		fmt.Println(<-c) //as many times as long is our slice
+	//this is the block of code which is handeling when ever a request gets completed in our program
+	for { //it is an infinite loop, also never ends
+		go checkLink(<-c, c)
 	}
-	/*this is equal to:
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-	*/
 
 }
 
 func checkLink(link string, c chan string) {
 	_, err := http.Get(link) //we don't really need the repsonse what comes back so _
-	if err != nil {
+	if err != nil {          //it means that sg is wrong with that website so u have an error message
 		fmt.Println(link, "might be down!")
-		c <- "Might be down I think"
+		c <- link
 		return
 	}
 	//checkLink() checks the request after and after in the order as u typed them in your slice
 
 	fmt.Println(link, "is up!")
-	c <- "yep it's up!"
+	c <- link
 }
