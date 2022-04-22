@@ -24,8 +24,18 @@ func (p person) speak() {
 }
 
 func bar(h human) {
+	//assertion
+	switch h.(type) {
+	case person:
+		fmt.Println("I was passed into barrrr", h.(person).first)
+	case secretAgent:
+		fmt.Println("I was passed into barrrr", h.(secretAgent).first)
+	}
+
 	fmt.Println("I was passed into bar", h)
 }
+
+type hotdog int
 
 func main() {
 	sa1 := secretAgent{
@@ -59,4 +69,12 @@ func main() {
 	bar(sa2)
 	bar(p1)
 
+	//conversion
+	var x hotdog = 42
+	fmt.Println(x)
+	fmt.Printf("%T\n", x)
+	var y int
+	y = int(x)
+	fmt.Println(y)
+	fmt.Printf("%T\n", y)
 }
