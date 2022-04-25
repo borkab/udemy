@@ -13,7 +13,7 @@ type Board struct {
 }
 
 // NailDriver represents behavior to drive nails into a board.
-type NailDriver interface {
+type NailDriver interface { //viselkedes
 	DriveNail(nailSupply *int, b *Board)
 }
 
@@ -57,10 +57,10 @@ func (Crowbar) PullNail(nailSupply *int, b *Board) {
 }
 
 // Contractor carries out the task of securing boards.
-type Contractor struct{}
+type Contractor struct{} //receptvegrehajto
 
 // Fasten will drive nails into a board.
-func (Contractor) Fasten(d NailDriver, nailSupply *int, b *Board) {
+func (Contractor) Fasten(d NailDriver, nailSupply *int, b *Board) { //cooking
 	for b.NailsDriven < b.NailsNeeded {
 		d.DriveNail(nailSupply, b)
 	}
