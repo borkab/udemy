@@ -2,22 +2,32 @@ package main
 
 import "time"
 
-type MyAwesomeCookbook struct { //hogyan formazom meg, h minden szepen egy oszlopban legyen automatikusan?
+type MyAwesomeCookbook struct {
 	Refrigerator Refrigerator
 	Oven         Oven
 	Mixer        Mixer
-	Stove        Stove
-	Cupboard     Cupboard
-	Tools        Tools
+	//	Stove        Stove
+	Cupboard Cupboard
+	//Tools    Tools
 }
 
 type Recipes struct {
-	TomatoSoup      struct{}
-	Pancake         struct{}
-	CupCake         struct{}
-	SemolinaPudding struct{}
+	//TomatoSoup struct{}
+	//	Pancake    struct{}
+	CupCake struct {
+	}
+	//SemolinaPudding struct{}
+}
+type Ingrerdients struct {
+	Flour  struct{}
+	Yogurt struct{}
+	Egg    struct{}
+	Butter struct{}
+	Sugar  struct{}
+	Milk   struct{}
 }
 
+/*
 type Ingrerdients struct {
 	Dairy
 	Grains
@@ -50,16 +60,24 @@ type Spices struct {
 	Sugar     struct{}
 	Basilikum struct{}
 }
+*/
+/*
 type Kitchentools struct {
-	Knife     struct{}
-	Scissors  struct{}
-	Fork      struct{}
-	Spoon     struct{}
-	Ladle     struct{}
-	FryingPan struct{}
-	Spatula   struct{}
-	Sheet     struct{}
+	//	Knife struct{} // a kes egy viselkedes, barmilyen kesed van, ossze tudod vele vagni a zoldseget,
+	//tehat interface, tartalmazza a Cutting() methodot
+
+	//Scissors  struct{} kell az egy szakacskonyvbe?
+	//Fork      struct{}
+	Spoon struct{}
+	//	Ladle struct{}
+
+	//	Pan struct{} // ez is inkabb viselkedes, mindegy milyen serpenyo v wok, megsul benne a rantott hus,
+	// tehat interface, tartalmazhatna  Frying() methodot
+
+	//	Spatula struct{}
+	Sheet struct{}
 }
+*/
 
 /*
 type (
@@ -73,16 +91,16 @@ type (
 */
 
 func (cookBook MyAwesomeCookbook) MakeCupcake() (*CupCake, error) {
-	oil := cookBook.Cupboard.GetOil()
+	butter := cookBook.Refrigerator.GetButter()
 	milk := cookBook.Refrigerator.GetMilk()
 	yogurt := cookBook.Refrigerator.GetYogurt()
 	egg := cookBook.Refrigerator.GetEggs()
 	flour := cookBook.Cupboard.GetFlour()
 	sugar := cookBook.Cupboard.GetSugar()
 	cp := &CupCake{}
-	tool := Kitchentools.Sheet{}
+	//tool := Kitchentools.Sheet{}
 
-	if err := cookBook.Mixer.Mix(cp, oil, milk, yogurt, egg, flour, sugar); err != nil {
+	if err := cookBook.Mixer.Mix(cp, butter, milk, yogurt, egg, flour, sugar); err != nil {
 		return nil, err
 	}
 
@@ -93,42 +111,47 @@ func (cookBook MyAwesomeCookbook) MakeCupcake() (*CupCake, error) {
 	return cp, nil
 }
 
+/*
 func (cookbook MyAwesomeCookbook) MakePancake() (*Pancake, error) {
 	oil := cookBook.Cupboard.GetOil()
 	milk := cookBook.Refrigerator.GetMilk()
 	pk := &Pancake{}
 }
-
+*/
 type Refrigerator interface {
-	GetMilk() Dairy    //with type of Milk it was invalid type
-	GetButter() Dairy  //with type of Butter it was invalid type
-	GetEggs() Proteins //with type of Egg it was invalid type
-	GetMeet() Proteins //with type of Meet it was invalid type
-	GetYogurt() Dairy  //with type of Yogurt it was invalid type
-
+	GetMilk() Milk     //Milk: undeclared name
+	GetButter() Butter //Butter: undeclared name
+	GetEggs() Egg      //Egg: undeclared name
+	//GetMeet()   Meet
+	GetYogurt() Yogurt //Yogurt: undeclared name
 }
 
 type Oven interface {
-	Frying(d time.Duration, temp int, stuffToFry Recipes, tool Kitchentools) error  //stuffToFry any invalid type
-	Baking(d time.Duration, temp int, stuffToBake Recipes, tool Kitchentools) error //stuffToBake any invalid type
+	//	Frying(d time.Duration, temp int, stuffToFry any, tool Kitchentools) error
+	Baking(d time.Duration, temp int, stuffToBake any) error
+}
 
-}
+/*
 type Stove interface {
-	//mixed named and unnamed parameterssyntax by Cooking(d )
-	Cooking(d time.Duration, temp int, stuffToCook Recipes, tool Kitchentools) error //stuffToCook invalid type
-	Stewing(d time.Duration, temp int, stuffToStew Recipes, tool Kitchentools) error //stuffToStew invalid type
-	//mixed named and unnamed parameters (compile)go-staticcheck by Stewing()
+	Cooking(d time.Duration, temp int, stuffToCook, tool Kitchentools) error
+	Stewing(d time.Duration, temp int, stuffToStew, tool Kitchentools) error
 }
+*/
 
 type Cupboard interface {
-	GetOil() Spices
-	GetDairies() Dairy //is it ok or I should declare GetFlour() and GetNoodles() separately?
+	//	GetOil()
+	GetFlour() Flour //Flour: undeclared name
+	GetSugar() Sugar //Sugar: undeclared name
 }
 type Mixer interface {
-	Mix(outPtr any, ingredients ...any) error // any is undeclared and invalid type
+	Mix(outPtr any, ingredients ...any) error
 }
+
+/*
 type Tools interface {
 	Cutting(tool Kitchentools, ingrerdients ...any) error
 	Pouring(tool Kitchentools, ingrerdients ...any) error
 	Stirring(tool Kitchentools, ingrerdients ...any) error
+	GetSheet() Sheet
 }
+*/
