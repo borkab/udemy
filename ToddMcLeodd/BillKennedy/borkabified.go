@@ -10,57 +10,31 @@ type MyAwesomeCookbook struct {
 	Cupboard Cupboard
 	//Tools    Tools
 }
+type (
+	Cupcake Recipe
+	//	TomatoSoup Recipe
+	//	Pancake Recipe
+	//	SemolinaPudding Recipe
+	Flour  Ingredient
+	Yogurt Ingredient
+	Egg    Ingredient
+	Butter Ingredient
+	Sugar  Ingredient
+	Milk   Ingredient
 
-type Recipes struct {
-	//TomatoSoup struct{}
-	//	Pancake    struct{}
-	CupCake struct {
-	}
-	//SemolinaPudding struct{}
-}
-type Ingrerdients struct {
-	Flour  struct{}
-	Yogurt struct{}
-	Egg    struct{}
-	Butter struct{}
-	Sugar  struct{}
-	Milk   struct{}
-}
+//	TomatoPaste Ingredient
+//	Potatoe     Ingredient
+//	Onion       Ingredient
+// 	Egg 		Ingredient
+// 	Meet    	Ingredient
+//	Oil			Ingredient
+//	Salt		Ingredient
+//	Basilikum 	Ingredient
+)
 
-/*
-type Ingrerdients struct {
-	Dairy
-	Grains
-	Proteins
-	Vegetables
-	Fruits
-}
-type Vegetables struct {
-	TomatoPaste struct{}
-	Potatoe     struct{}
-	Onion       struct{}
-}
-type Grains struct {
-	Grits   struct{}
-	Flour   struct{}
-	Noodles struct{}
-}
-type Proteins struct {
-	Egg  struct{}
-	Meet struct{}
-}
-type Dairy struct {
-	Butter struct{}
-	Milk   struct{}
-	Yogurt struct{}
-}
-type Spices struct {
-	Oil       struct{}
-	Salt      struct{}
-	Sugar     struct{}
-	Basilikum struct{}
-}
-*/
+type Recipe struct{} //csak h meg tudjam kulonboztetni hozzavalot es receptet
+type Ingredient struct{}
+
 /*
 type Kitchentools struct {
 	//	Knife struct{} // a kes egy viselkedes, barmilyen kesed van, ossze tudod vele vagni a zoldseget,
@@ -79,25 +53,14 @@ type Kitchentools struct {
 }
 */
 
-/*
-type (
-	TomatoSoup struct{}
-	Pancake struct{}
-	CupCake struct{}
-	Butter  struct{}
-	Milk    struct{}
-
-)
-*/
-
-func (cookBook MyAwesomeCookbook) MakeCupcake() (*CupCake, error) {
+func (cookBook MyAwesomeCookbook) MakeCupcake() (*CupCake, error) { //why is CupCake undeclared? I didn't change it
 	butter := cookBook.Refrigerator.GetButter()
 	milk := cookBook.Refrigerator.GetMilk()
 	yogurt := cookBook.Refrigerator.GetYogurt()
 	egg := cookBook.Refrigerator.GetEggs()
 	flour := cookBook.Cupboard.GetFlour()
 	sugar := cookBook.Cupboard.GetSugar()
-	cp := &CupCake{}
+	cp := &CupCake // miert invalid type?? ezen semmit nem valtoztattam
 	//tool := Kitchentools.Sheet{}
 
 	if err := cookBook.Mixer.Mix(cp, butter, milk, yogurt, egg, flour, sugar); err != nil {
@@ -119,11 +82,11 @@ func (cookbook MyAwesomeCookbook) MakePancake() (*Pancake, error) {
 }
 */
 type Refrigerator interface {
-	GetMilk() Milk     //Milk: undeclared name
-	GetButter() Butter //Butter: undeclared name
-	GetEggs() Egg      //Egg: undeclared name
+	GetMilk() Milk
+	GetButter() Butter
+	GetEggs() Egg
 	//GetMeet()   Meet
-	GetYogurt() Yogurt //Yogurt: undeclared name
+	GetYogurt() Yogurt
 }
 
 type Oven interface {
