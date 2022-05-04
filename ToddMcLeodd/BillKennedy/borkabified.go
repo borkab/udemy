@@ -1,6 +1,8 @@
-package main
+package billkennedy
 
-import "time"
+import (
+	"time"
+)
 
 type MyAwesomeCookbook struct {
 	Refrigerator Refrigerator
@@ -10,17 +12,25 @@ type MyAwesomeCookbook struct {
 	Cupboard Cupboard
 	//Tools    Tools
 }
-type (
-	Cupcake Recipe
-	//	TomatoSoup Recipe
-	//	Pancake Recipe
-	//	SemolinaPudding Recipe
-	Flour  Ingredient
-	Yogurt Ingredient
-	Egg    Ingredient
-	Butter Ingredient
-	Sugar  Ingredient
-	Milk   Ingredient
+
+type Cupcake struct {
+	HasDressing bool
+	IsRaw       bool
+}
+
+//	TomatoSoup Recipe
+//	Pancake Recipe
+//	SemolinaPudding Recipe
+
+type Ingredient int
+
+const ( // enum
+	Flour Ingredient = iota
+	Yogurt
+	Egg
+	Butter
+	Sugar
+	Milk
 
 //	TomatoPaste Ingredient
 //	Potatoe     Ingredient
@@ -33,7 +43,6 @@ type (
 )
 
 type Recipe struct{} //csak h meg tudjam kulonboztetni hozzavalot es receptet
-type Ingredient struct{}
 
 /*
 type Kitchentools struct {
@@ -53,15 +62,41 @@ type Kitchentools struct {
 }
 */
 
-func (cookBook MyAwesomeCookbook) MakeCupcake() (*CupCake, error) { //why is CupCake undeclared? I didn't change it
+type unit string
+
+const (
+	Spoon unit = "spoon"
+	Mug   unit = "mug"
+	Cup   unit = "cup"
+	Etc   unit = "etc"
+)
+
+type TODOGiveThisANormalNameAndUseRefactoringToRenameIt struct {
+	Ingredient Ingredient
+	Quantity   int
+	Unit       unit
+}
+
+func (cookBook MyAwesomeCookbook) MakeCupcake() (*Cupcake, error) { //why is CupCake undeclared? I didn't change it
 	butter := cookBook.Refrigerator.GetButter()
-	milk := cookBook.Refrigerator.GetMilk()
+	milk := cookBook.Refrigerator.GetMilk(3, Cup)
 	yogurt := cookBook.Refrigerator.GetYogurt()
 	egg := cookBook.Refrigerator.GetEggs()
 	flour := cookBook.Cupboard.GetFlour()
 	sugar := cookBook.Cupboard.GetSugar()
-	cp := &CupCake // miert invalid type?? ezen semmit nem valtoztattam
+
+	type X struct {
+		someField string
+	}
+
+	x := X{}
+	_ = x
+
+	cp := &Cupcake{}
 	//tool := Kitchentools.Sheet{}
+
+	cp1 := cp // pass by value -> cp is a pointer -> cp of the pointer -> both pointer points to the same variable
+	_ = cp1
 
 	if err := cookBook.Mixer.Mix(cp, butter, milk, yogurt, egg, flour, sugar); err != nil {
 		return nil, err
@@ -82,11 +117,11 @@ func (cookbook MyAwesomeCookbook) MakePancake() (*Pancake, error) {
 }
 */
 type Refrigerator interface {
-	GetMilk() Milk
-	GetButter() Butter
-	GetEggs() Egg
+	GetMilk(quantity int, unit unit) TODOGiveThisANormalNameAndUseRefactoringToRenameIt
+	GetButter() Ingredient
+	GetEggs() Ingredient
 	//GetMeet()   Meet
-	GetYogurt() Yogurt
+	GetYogurt() Ingredient
 }
 
 type Oven interface {
@@ -103,8 +138,8 @@ type Stove interface {
 
 type Cupboard interface {
 	//	GetOil()
-	GetFlour() Flour //Flour: undeclared name
-	GetSugar() Sugar //Sugar: undeclared name
+	GetFlour() Ingredient //Flour: undeclared name
+	GetSugar() Ingredient //Sugar: undeclared name
 }
 type Mixer interface {
 	Mix(outPtr any, ingredients ...any) error

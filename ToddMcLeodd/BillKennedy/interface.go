@@ -2,7 +2,7 @@
 from here: https://www.ardanlabs.com/blog/2015/09/composition-with-go.html
 */
 
-package main
+package billkennedy
 
 import "fmt"
 
@@ -34,10 +34,10 @@ type Mallet struct{}
 // DriveNail pounds a nail into the specified board.
 func (Mallet) DriveNail(nailSupply *int, b *Board) {
 	// Take a nail out of the supply.
-	*nailSupply-
+	*nailSupply--
 
-		// Pound a nail into the board.
-		b.NailsDriven++
+	// Pound a nail into the board.
+	b.NailsDriven++
 
 	fmt.Println("Mallet: pounded nail into the board.")
 }
@@ -48,10 +48,10 @@ type Crowbar struct{}
 // PullNail yanks a nail out of the specified board.
 func (Crowbar) PullNail(nailSupply *int, b *Board) {
 	// Yank a nail out of the board.
-	b.NailsDriven-
+	b.NailsDriven--
 
-		// Put that nail back into the supply.
-		*nailSupply++
+	// Put that nail back into the supply.
+	*nailSupply++
 
 	fmt.Println("Crowbar: yanked nail out of the board.")
 }
