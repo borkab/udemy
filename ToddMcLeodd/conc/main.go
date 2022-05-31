@@ -16,13 +16,19 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(gs)
 
+	var mu sync.Mutex
+
 	for i := 0; i < gs; i++ {
 		go func() {
+			mu.Lock()
+			//u can lock your variable that multiple goroutines don't get
+			//access to your variable at the same time (that is race condition)
 			v := counter
 			//time.Sleep(time.Second)
 			runtime.Gosched()
 			v++
 			counter = v
+			mu.Unlock()
 			wg.Done()
 		}()
 		fmt.Println("Goroutines: ", runtime.NumGoroutine())
@@ -31,31 +37,3 @@ func main() {
 	fmt.Println("Goroutines: ", runtime.NumGoroutine())
 	fmt.Println("count:", counter)
 }
-
-/*outputs:
-[borkab@everest conc]$ go run main.go
-CPUs:  16
-Goroutines:  1
-Goroutines:  1
-count: 1
-[borkab@everest conc]$ go run main.go
-CPUs:  16
-Goroutines:  1
-Goroutines:  1
-count: 15
-[borkab@everest conc]$ go run main.go
-CPUs:  16
-Goroutines:  1
-Goroutines:  1
-count: 21
-[borkab@everest conc]$ go run main.go
-CPUs:  16
-Goroutines:  1
-Goroutines:  1
-count: 2
-[borkab@everest conc]$ go run main.go
-CPUs:  16
-Goroutines:  1
-Goroutines:  1
-count: 13
-*/
