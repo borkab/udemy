@@ -4,31 +4,24 @@ import (
 	"fmt"
 	"runtime"
 	"sync"
+	"sync/atomic"
 )
 
 func main() {
 	fmt.Println("CPUs: ", runtime.NumCPU())
 	fmt.Println("Goroutines: ", runtime.NumGoroutine())
 
-	counter := 0
+	var counter int64
 
 	const gs = 100
 	var wg sync.WaitGroup
 	wg.Add(gs)
 
-	var mu sync.Mutex
-
 	for i := 0; i < gs; i++ {
 		go func() {
-			mu.Lock()
-			//u can lock your variable that multiple goroutines don't get
-			//access to your variable at the same time (that is race condition)
-			v := counter
-			//time.Sleep(time.Second)
+			atomic.AddInt64(&counter, 1) //write to an int64 (counter)
 			runtime.Gosched()
-			v++
-			counter = v
-			mu.Unlock()
+			fmt.Println("Counter\t", atomic.LoadInt64(&counter)) //and read from or load an int64 (counter)
 			wg.Done()
 		}()
 		fmt.Println("Goroutines: ", runtime.NumGoroutine())
