@@ -11,7 +11,7 @@ func main() {
 	fmt.Println("CPUs: ", runtime.NumCPU())
 	fmt.Println("Goroutines: ", runtime.NumGoroutine())
 
-	var counter int64
+	var counter int64 //any time u see int64 in go, u should think on pkg atomic
 
 	const gs = 100
 	var wg sync.WaitGroup
