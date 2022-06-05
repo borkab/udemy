@@ -4,29 +4,24 @@ import (
 	"fmt"
 	"runtime"
 	"sync"
+	"sync/atomic"
 )
 
 func main() {
 	fmt.Println(runtime.NumGoroutine())
 
-	incrementor := 0
+	var incrementor int64
 	const routes = 50
 	var wg sync.WaitGroup
 	wg.Add(routes)
 
-	var mu sync.Mutex
-
 	for i := 0; i < routes; i++ {
 		go func() {
-			mu.Lock()
-			new := incrementor
-			new++
-			incrementor = new
-			fmt.Println("inc:", incrementor)
-			mu.Unlock()
+			atomic.AddInt64(&incrementor, 1)
+			fmt.Println(atomic.LoadInt64(&incrementor))
 			wg.Done()
 		}()
-		fmt.Println("Goroutines in loop:\t", runtime.NumGoroutine())
+
 	}
 	wg.Wait()
 	fmt.Println("Goroutines outside:\t", runtime.NumGoroutine())
