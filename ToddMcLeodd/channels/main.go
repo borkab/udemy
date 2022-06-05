@@ -3,12 +3,13 @@ package main
 import "fmt"
 
 func main() {
-	c := make(<-chan int, 2) //send only
+	c := make(chan int)
+	cr := make(<-chan int) //recieve only
+	cs := make(chan<- int) //send only
 
-	c <- 42
-	c <- 43
-	fmt.Println(<-c)
-	fmt.Println(<-c) //because our channel is a send only type chan
+	//because our channel is a send only type chan
 	fmt.Println("----------------------------------------------------")
-	fmt.Printf("%T\n", c)
+	fmt.Printf("c\t%T\n", c)
+	fmt.Printf("cr\t%T\n", cr)
+	fmt.Printf("cs\t%T\n", cs)
 }
