@@ -14,15 +14,16 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(routes)
 
+	var mu sync.Mutex
+
 	for i := 0; i < routes; i++ {
 		go func() {
-
+			mu.Lock()
 			new := incrementor
-
-			runtime.Gosched()
 			new++
 			incrementor = new
 			fmt.Println("inc:", incrementor)
+			mu.Unlock()
 			wg.Done()
 		}()
 		fmt.Println("Goroutines in loop:\t", runtime.NumGoroutine())
