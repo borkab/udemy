@@ -20,7 +20,7 @@ func recieve(e, o, q <-chan int) {
 	for {
 		select {
 		case v := <-e:
-			fmt.Println("from the even channel: ", v)
+			fmt.Println("from the eve channel: ", v)
 		case v := <-o:
 			fmt.Println("from the odd channel: ", v)
 		case v := <-q:
