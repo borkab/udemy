@@ -1,4 +1,4 @@
-package staring_code
+package main
 
 import (
 	"fmt"
@@ -11,11 +11,11 @@ type canine struct {
 	age  int
 }
 
-func main() {
+func StartingCode() {
 	fido := canine{
-		fido: "Fido",
+		name: "Fido",
 		age:  dog.Years(10),
 	}
-	fmt.Pritnln(fido)
+	fmt.Println(fido)
 	fmt.Println(dog.YearsTwo(20))
 }
